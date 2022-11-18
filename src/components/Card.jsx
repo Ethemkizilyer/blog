@@ -4,16 +4,23 @@ import konu from "../assets/konu.jpeg";
 import { UpdateComment, UpdateUser, useFetch } from "../auth/functions";
 import like from "../assets/like.jpg";
 import commentimg from "../assets/comment.png";
+import { useSelector } from "react-redux";
+import { toastErrorNotify } from "../helper/Toastfy";
 
 const Card = ({ item }) => {
   const navigate = useNavigate();
   const [likethink, setLikeThink] = useState(false);
   const { isLoading, cardList } = useFetch();
   const [comments, setComments] = useState("");
+const { user } = useSelector((state) => state.auth);
+// console.log(user);
+
 
   const modalLike = (id) => {
-    console.log(id);
-    setLikeThink(!likethink);
+    console.log(id); 
+    user?.username ? (
+    setLikeThink(!likethink)
+   ) : toastErrorNotify("Lütfen Kayıt Yaptırınız") 
     if (!likethink) {
       const mod = cardList?.find((product) => product.id === id);
       mod.like += 1;
@@ -23,6 +30,7 @@ const Card = ({ item }) => {
       mod.like -= 1;
       UpdateUser(mod);
     }
+    
   };
   const addComment = (id) => {
     const commentArray = cardList?.find((produc) => produc.id == id);
