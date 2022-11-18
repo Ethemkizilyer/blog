@@ -37,7 +37,7 @@ const Card = ({ item }) => {
   };
   return (
     <>
-      <div className="rounded-lg shadow-md  max-w-sm w-[350px] relative bg-gray-200 shadow-black mb-12">
+      {/* <div className="rounded-lg shadow-md  max-w-sm w-[350px] relative bg-gray-200 shadow-black mb-12">
         <div className="w-[90%] h-36">
           <div className="w-[90%] h-36">
             {item.ImgUrl ? (
@@ -62,7 +62,7 @@ const Card = ({ item }) => {
             <p className="text-gray-600 text-xs">Last updated 3 mins ago</p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="rounded-lg shadow-md  max-w-sm w-[350px] relative bg-gray-200 shadow-black mb-12">
         <div className="w-[90%] h-36">
