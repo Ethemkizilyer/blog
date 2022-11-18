@@ -4,12 +4,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import konu from "../assets/konu.jpeg";
 import like from "../assets/like.jpg";
 import comment from "../assets/comment.png";
-import Navbar from "../components/Navba";
+import Navbar from "../components/Navbar";
 import blog from "../assets/konu.jpeg";
 import { DeleteUser, UpdateCard, useFetch } from "../auth/functions";
 import { toastSuccessNotify, toastWarnNotify } from "../helper/Toastfy";
 
-const Detail = () => {
+const Details = () => {
   const initialValues = {
     title: "",
     imgUrl: "",
@@ -37,7 +37,7 @@ const Detail = () => {
   // console.log(state)
   return (
     <>
-
+      <Navbar />
       <div className="flex items-center mt-32 flex-col">
         <div className="rounded-lg shadow-md  max-w-sm w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
           <div className="w-[90%] h-36">
@@ -240,4 +240,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default Details;

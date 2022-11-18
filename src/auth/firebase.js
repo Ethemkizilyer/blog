@@ -145,6 +145,6 @@ export const signUpProviderFaceBook = (navigate, dispatch) => {
     })
     .catch((error) => {
       toastErrorNotify(error);
-      console.log("sadık");
+
     });
 };
