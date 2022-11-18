@@ -1,9 +1,13 @@
 import React from 'react'
 import { AiFillPlusCircle, IconName } from "react-icons/ai";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { logOut } from '../auth/firebase';
 
 const Navba = () => {
 const navigate=useNavigate()
+const dispatch=useDispatch()
+const { user } = useSelector((state) => state.auth);
     const newblog= ()=> {
 navigate("new")
     }
@@ -19,6 +23,7 @@ navigate("new")
           </Link>
         </div>
         <div className="dropdown relative flex gap-4">
+          {user && <h5 className="mr-2 capitalize bg-white">{user.username}</h5>}
           <AiFillPlusCircle onClick={() => newblog()} className="text-xl" />
 
           <Link
@@ -61,6 +66,7 @@ navigate("new")
               <Link
                 className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
                 to="/"
+                onClick={() => logOut(navigate, dispatch)}
               >
                 Logout
               </Link>

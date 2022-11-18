@@ -1,15 +1,60 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { AddUser, useFetch } from '../auth/functions';
+import { toastWarnNotify } from '../helper/Toastfy';
 
 
 
 const New = () => {
-    const navigate=useNavigate()
 
-const blogset=(e)=> {
-    e.preventDefault()
-navigate("/")
-}
+      const navigate = useNavigate();
+      const initialValues = {
+        title: "",
+        imgUrl: "",
+        content: "",
+      };
+      const { user } = useSelector((state) => state.auth);
+      const [info, setInfo] = useState(initialValues);
+      const [count, setCount] = useState();
+      const [comment, setComment] = useState(["sadık"]);
+      const [like, setLike] = useState(0);
+      const blogset = (e) => {
+        e.preventDefault();
+        let asd = new Date();
+        let date = new Date(
+          `${asd.getFullYear()}-${asd.getMonth() + 1}-${asd.getDate()}`
+        );
+        let history = date.toLocaleDateString("tr-TR", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+        if (info.title && info.content && info.imgUrl) {
+          if (count?.length > 1) {
+            setComment(history);
+            AddUser(info, user, history, like, comment);
+            setInfo(initialValues);
+            navigate("/");
+          } else {
+            toastWarnNotify("Contente minimum 100 harf yazılmalıdır");
+          }
+        } else {
+          toastWarnNotify("Form Boş Bırakılamaz");
+        }
+        
+      };
+
+      const { isLoading, cardList } = useFetch();
+      useEffect(() => {
+        setCount(info.content.split(""));
+      }, [info]);
+
+// const blogset=(e)=> {
+//     e.preventDefault()
+// navigate("/")
+// }
 
 
   return (
@@ -34,7 +79,9 @@ navigate("/")
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="exampleInput7"
-              placeholder="Name"
+              placeholder="Title"
+              value={info.title}
+              onChange={(e) => setInfo({ ...info, title: e.target.value })}
             />
           </div>
           <div className="form-group mb-6">
@@ -55,11 +102,16 @@ navigate("/")
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="exampleInput8"
-              placeholder="Email address"
+              placeholder="Image URL"
+              value={info.imgUrl}
+              onChange={(e) => setInfo({ ...info, imgUrl: e.target.value })}
             />
           </div>
-          <div className="form-group mb-6">
+          <div className="relative">
             <textarea
+              placeholder="Content *"
+              value={info.content}
+              onChange={(e) => setInfo({ ...info, content: e.target.value })}
               className="
         form-control
         block
@@ -79,26 +131,16 @@ navigate("/")
       "
               id="exampleFormControlTextarea13"
               rows={3}
-              placeholder="Message"
-              defaultValue={""}
+              
+            
             />
+            <p className="absolute bottom-4 right-4">
+              {`3000/ ${count?.length}`}
+            </p>
           </div>
-          <div className="form-group form-check text-center mb-6">
-            <input
-              type="checkbox"
-              className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
-              id="exampleCheck87"
-              defaultChecked
-            />
-            <label
-              className="form-check-label inline-block text-gray-800"
-              htmlFor="exampleCheck87"
-            >
-              Send me a copy of this message
-            </label>
-          </div>
+
           <button
-            type="submit"
+           onClick={blogset}
             className="
       w-full
       px-6

@@ -1,6 +1,8 @@
 
+import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { store } from './app/store';
 import Navba from './components/Navba';
 import Detail from './pages/Detail';
 import Home from './pages/Home';
@@ -11,6 +13,7 @@ import Register from './pages/Register';
 function App() {
   return (
     <>
+    <Provider store={store}>
     <Navba/>
      <Routes>
       <Route path='/' element={<Home/>} />
@@ -20,6 +23,7 @@ function App() {
       <Route path='/detail' element={<Detail/>} />
 
      </Routes>
+     </Provider>
     </>
   );
 }

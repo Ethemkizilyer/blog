@@ -1,7 +1,33 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { signIn, signUpProvider, signUpProviderFaceBook } from '../auth/firebase';
 
 const Login = () => {
+    const [loginUser, setLoginUser] = useState({
+      username: "",
+      email: "",
+      password: "",
+    });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleGoogle = () => {
+      signUpProvider(navigate, dispatch);
+    };
+    const handleFacebook = () => {
+      signUpProviderFaceBook(navigate, dispatch);
+    };
+    const handleClick = (e) => {
+      e.preventDefault();
+      signIn(
+        loginUser.username,
+        loginUser.email,
+        loginUser.password,
+        navigate,
+        dispatch
+      );
+    };
+
   return (
     <div className="w-[100%] h-[90vh] p-4 border">
       <div>
@@ -15,6 +41,11 @@ const Login = () => {
                 Email address
               </label>
               <input
+                placeholder="Email address"
+                value={loginUser?.email}
+                onChange={(e) =>
+                  setLoginUser({ ...loginUser, email: e.target.value })
+                }
                 type="email"
                 className="form-control
         block
@@ -31,9 +62,7 @@ const Login = () => {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                id="exampleInputEmail2"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
+               
               />
             </div>
             <div className="form-group mb-6">
@@ -61,6 +90,10 @@ const Login = () => {
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleInputPassword2"
                 placeholder="Password"
+                value={loginUser?.password}
+                onChange={(e) =>
+                  setLoginUser({ ...loginUser, password: e.target.value })
+                }
               />
             </div>
             <div className="flex justify-between items-center mb-6">
@@ -104,8 +137,57 @@ const Login = () => {
       transition
       duration-150
       ease-in-out"
+              onClick={handleClick}
             >
               Sign in
+            </button>
+            <button
+              type="submit"
+              className="
+      w-full
+      px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out"
+              onClick={handleGoogle}
+            >
+              Google
+            </button>
+            <button
+              type="submit"
+              className="
+      w-full
+      px-6
+      py-2.5
+      bg-blue-600
+      text-white
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      rounded
+      shadow-md
+      hover:bg-blue-700 hover:shadow-lg
+      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+      active:bg-blue-800 active:shadow-lg
+      transition
+      duration-150
+      ease-in-out"
+              onClick={handleFacebook}
+            >
+              Facebook
             </button>
             <p className="text-gray-800 mt-6 text-center">
               Not a member?

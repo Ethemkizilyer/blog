@@ -1,20 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { createUser } from '../auth/firebase';
+import { useDispatch } from "react-redux"
 
 const Register = () => {
+  const navigate=useNavigate()
+  const [values,setValues]= useState()
+ const dispatch = useDispatch();
+
+  
 
     const changeHandler = (event) => {
+      event.preventDefault()
       const { name, value } = event.target;
       setValues({ ...values, [name]: value });
-      createUser(name);
+      // createUser(name);
 
     };
+
+    const ethem=(e)=>{
+     e.preventDefault();
+     console.log(values)
+     createUser(values,dispatch,navigate)
+    }
 
   return (
     <div className="w-[100%] h-[90vh] p-4 border">
       <div>
         <div className="block p-6 rounded-lg shadow-lg mx-auto bg-white max-w-md">
-          <form>
+          <form onSubmit={ethem}>
             <div className="grid grid-cols-2 gap-4">
               <div className="form-group mb-6">
                 <input
@@ -34,10 +48,9 @@ const Register = () => {
           ease-in-out
           m-0
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleInput123"
-                  aria-describedby="emailHelp123"
+               
                   placeholder="First name"
-                  name="username"
+                  name="displayName"
                   onChange={changeHandler}
                 />
               </div>
@@ -59,8 +72,8 @@ const Register = () => {
           ease-in-out
           m-0
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleInput124"
-                  aria-describedby="emailHelp124"
+                 
+              
                   placeholder="Last name"
                 />
               </div>
@@ -82,7 +95,7 @@ const Register = () => {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                id="exampleInput125"
+
                 placeholder="Email address"
                 name="email"
                 onChange={changeHandler}
@@ -90,7 +103,7 @@ const Register = () => {
             </div>
             <div className="form-group mb-6">
               <input
-                type="password"
+                type="text"
                 className="form-control block
         w-full
         px-3
@@ -105,28 +118,15 @@ const Register = () => {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                id="exampleInput126"
+             
                 placeholder="Password"
                 name="password"
                 onChange={changeHandler}
               />
             </div>
-            <div className="form-group form-check text-center mb-6">
-              <input
-                type="checkbox"
-                className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
-                id="exampleCheck25"
-                defaultChecked
-              />
-              <label
-                className="form-check-label inline-block text-gray-800"
-                htmlFor="exampleCheck25"
-              >
-                Subscribe to our newsletter
-              </label>
-            </div>
+            
             <button
-              type="submit"
+           
               className="
       w-full
       px-6
