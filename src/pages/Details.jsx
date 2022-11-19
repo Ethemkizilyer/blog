@@ -80,11 +80,11 @@ const Details = () => {
   return (
     <div className="flex item-center justify-around">
       <div className="flex items-center  flex-col">
-        <div className="rounded-lg shadow-md  max-w-sm w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
+        <div className="rounded-lg shadow-md w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
           <div className="w-[90%] h-36 mx-auto">
             {state.ImgUrl ? (
               <img
-                className="rounded-t-lg w-[19rem] mx-auto"
+                className="rounded-t-lg w-[10rem] mx-auto"
                 src={state.ImgUrl}
                 alt=""
               />
@@ -104,7 +104,7 @@ const Details = () => {
                 width: "95%",
                 wordWrap: "break-word",
               }}
-              className="text-md font-bold "
+              className="text-md font-bold overflow-auto h-32"
             >
               {state.content}
             </p>
