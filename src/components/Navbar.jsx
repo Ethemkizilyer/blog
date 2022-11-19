@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  // console.log(user)
+  console.log(user)
   return (
     <>
       <nav className="w-full flex flex-wrap items-center justify-between py-3 bg-white dark:bg-gray-900 dark:text-white shadow-lg navbar navbar-expand-lg fixed-top">
@@ -20,7 +20,7 @@ const Navbar = () => {
           {/* Right elements */}
           <div className="flex items-center relative">
             {/* Icon */}
-            {user && <h5 className="mr-2 capitalize">{user.username}</h5>}
+            {user && <h5 className="mr-2 capitalize">{user.displayName}</h5>}
             <div className="dropdown relative">
               <span
                 className="dropdown-toggle flex items-center hidden-arrow"
