@@ -88,7 +88,7 @@ export const logOut = (navigate, dispatch) => {
   dispatch(clearUser());
   toastWarnNotify("logged out successfully");
   navigate("/");
-  localStorage.setItem("like",JSON.stringify(true))
+  localStorage.setItem("like",JSON.stringify(false))
   localStorage.setItem("not",JSON.stringify(""))
 };
 export const signIn = async (username, email, password, navigate, dispatch) => {
