@@ -17,22 +17,28 @@ const Details = () => {
     imgUrl: "",
     content: "",
   };
+  const { user } = useSelector((state) => state.auth);
   const [editCard, setEditCard] = useState(initialValues);
-
+ 
   const { state } = useLocation();
 
   const navigate = useNavigate();
   const [likethink, setLikeThink] = useState();
 
   const { isLoading, cardList } = useFetch();
-  const [comments, setComments] = useState("");
-  const { user } = useSelector((state) => state.auth);
+ const [asd,setAsd]= useState(state?.comment.length)
+ const [as,setAs]= useState(state?.like)
+//  const [not,setNot]= useState(state?.comment)
+ const [not, setNot] = useState(state?.comment || JSON.parse(localStorage.getItem("not"))  );
+ 
+
+ const [comments, setComments] = useState({ yazar: "", coment: "" });
   const deleteCard = (id) => {
     DeleteUser(id);
     navigate("/");
     toastWarnNotify("Delete successfully");
   };
-  const UpdateUser = (id) => {
+  const UpdateUse = (id) => {
     const mod = cardList.find((produc) => produc.id == id);
     mod.ImgUrl = editCard.imgUrl;
     mod.Title = editCard.title;
@@ -41,11 +47,13 @@ const Details = () => {
     navigate("/");
     toastSuccessNotify("Edit succesfully");
   };
-  // console.log(state)
+  console.log(state)
 
   // console.log(user);
 
   useEffect(() => {
+      // setNot(JSON.parse(localStorage.getItem("not")))
+     
     setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
   }, []);
   const modalLike = (id) => {
@@ -56,31 +64,49 @@ const Details = () => {
     setLikeThink(!likethink);
     if (!likethink) {
       const mod = cardList?.find((product) => product.id === id);
-
+setAs(as+1)
       mod.like += 1;
       UpdateUser(mod);
     } else {
       const mod = cardList?.find((product) => product.id === id);
       mod.like -= 1;
+      setAs(as - 1);
       UpdateUser(mod);
     }
   };
+     
+useEffect(() => {
+  const yazan = user?.username || "Anonim";
+  setComments({ ...comments, yazar: yazan });
+}, [user,state]);
+
+
+// ****************
   const addComment = (id) => {
-    const commentArray = cardList?.find((produc) => produc.id == id);
-    console.log(commentArray);
-    // console.log(id);
-    commentArray?.comment.push(comments);
-    UpdateUser(commentArray);
+    
+ const commentArray = cardList?.find((produc) => produc.id == id);
+ console.log(commentArray);
+ setNot([...not,comments])
+setAsd(asd+1)
+ console.log(user);
+
+ commentArray?.comment.push(comments);
+ UpdateUser(commentArray);
+localStorage.setItem("not", JSON.stringify(commentArray.comment));
+
   };
+
+  // *****************************
+console.log(not);
   return (
     <div className="flex item-center justify-around">
       <div className="flex items-center  flex-col">
         <div className="rounded-lg shadow-md w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
           <div className="w-[90%] h-36 mx-auto">
-            {state.ImgUrl ? (
+            {state?.ImgUrl ? (
               <img
                 className="rounded-t-lg w-[10rem] mx-auto"
-                src={state.ImgUrl}
+                src={state?.ImgUrl}
                 alt=""
               />
             ) : (
@@ -89,10 +115,10 @@ const Details = () => {
           </div>
           <div className="p-4 mt-12 bg-gray-400">
             <h5 className="text-gray-900 text-xl mb-2 font-bold uppercase">
-              {state.Title}
+              {state?.Title}
             </h5>
             <p className="text-gray-700 text-[12px] mb-4 w-[90%]  overflow-hidden text-ellipsis">
-              {state.history}
+              {state?.history}
             </p>
             <p
               style={{
@@ -101,7 +127,7 @@ const Details = () => {
               }}
               className="text-md font-bold overflow-auto h-32"
             >
-              {state.content}
+              {state?.content}
             </p>
           </div>
           <div className="flex justify-start gap-2 items-center mt-4 ml-4">
@@ -113,7 +139,7 @@ const Details = () => {
               />
             </svg>
             <p className="text-gray-700 text-lg text-ellipsis overflow-hidden font-bold ">
-              {state.email}
+              {state?.email}
             </p>
           </div>
 
@@ -122,23 +148,54 @@ const Details = () => {
               <img
                 src={like}
                 alt=""
-                onClick={() => modalLike(state.id)}
+                onClick={() => modalLike(state?.id)}
                 className="w-10"
               />
-              <p className="text-lg font-bold text-red-400">{state.like}</p>
+              <p className="text-lg font-bold text-red-400">{as}</p>
             </div>
+
             <div className="flex justify-center items-center gap-2 mb-2">
               <img
                 src={commentimg}
                 alt=""
                 className="w-10 mb-1"
-                data-bs-toggle="modal"
-                data-bs-target={`#${state.id}`}
+                // data-bs-toggle="modal"
+                // data-bs-target={`#${state?.id}`}
               ></img>
               <p className="text-lg font-bold text-red-400">
-                {state.comment.length - 1}
+                {not ? not.length - 1 : asd - 1}
               </p>
             </div>
+          </div>
+          <div>
+            <input
+              className="w-[85%]
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        
+        transition
+        ease-in-out
+        m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              value={comments?.coment}
+              placeholder="Yorum..."
+              onChange={(e) =>
+                setComments({ ...comments, coment: e.target.value })
+              }
+              type="text"
+            />
+            <button
+              type="button"
+              class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              onClick={() => addComment(state?.id)}
+            >
+              Ekle
+            </button>
           </div>
         </div>
         {user.email == state?.email ? (
@@ -149,15 +206,15 @@ const Details = () => {
               <button
                 type="button"
                 className="w-[120px] bg-slate-300 py-2 px-4 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "
-                data-bs-toggle="modal"
+                data-bs-toggle="modal1"
                 data-bs-target="#exampleModal"
               >
                 Edit
               </button>
-              {/* Modal */}
+              {/* ***********************Modal**************************** */}
               <div
                 className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                id={`${state.id}`}
+                id={`${state?.id}`}
                 aria-labelledby="staticBackdropLabel"
                 aria-hidden="true"
               >
@@ -179,9 +236,11 @@ const Details = () => {
                     </div>
                     <textarea
                       className="modal-body relative p-4 outline-none"
-                      value={comments.yourComment}
+                      value={comments?.coment}
                       placeholder="write your comment"
-                      onChange={(e) => setComments(e.target.value)}
+                      onChange={(e) =>
+                        setComments({ ...comments, coment: e.target.value })
+                      }
                     ></textarea>
                     <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                       <button
@@ -192,7 +251,7 @@ const Details = () => {
                       </button>
                       <button
                         className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
-                        onClick={() => addComment(state.id)}
+                        onClick={() => addComment(state?.id)}
                         data-bs-dismiss="modal"
                       >
                         Add Comment
@@ -201,6 +260,7 @@ const Details = () => {
                   </div>
                 </div>
               </div>
+              {/* ************************************************** */}
               <div
                 className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
                 id="exampleModal"
@@ -220,7 +280,7 @@ const Details = () => {
                       <button
                         type="button"
                         className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                        data-bs-dismiss="modal"
+                        data-bs-dismiss="modal1"
                         aria-label="Close"
                       />
                     </div>
@@ -287,7 +347,7 @@ const Details = () => {
             transition
             duration-150
             ease-in-out"
-                        data-bs-dismiss="modal"
+                        data-bs-dismiss="modal1"
                       >
                         Close
                       </button>
@@ -310,8 +370,8 @@ const Details = () => {
         duration-150
         ease-in-out
         ml-1"
-                        onClick={() => UpdateUser(state.id)}
-                        data-bs-dismiss="modal"
+                        onClick={() => UpdateUse(state.id)}
+                        data-bs-dismiss="modal1"
                       >
                         Save Edit
                       </button>
@@ -333,14 +393,34 @@ const Details = () => {
       </div>
       {state.comment.length > 1 && (
         <div>
-          <h4>MESSAGE</h4>
-          {state.comment.slice(1).map((item, index) => (
-            <ul>
-              <li key={index}>
-                {index + 1}-{item}
-              </li>
-            </ul>
-          ))}
+          <h4 className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg bg-blue-600 text-white text-center">
+            MESSAGE
+          </h4>
+          <ul className="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
+            {!not
+              ? state?.comment.slice(1).map((item, index) => (
+                  <li
+                    className="px-6 py-2 border-b border-gray-200 w-full flex justify-between"
+                    key={index}
+                  >
+                    <span className="inline-block">
+                      {index + 1}-{item.coment}
+                    </span>
+                    <span className="inline-block">{item.yazar}</span>
+                  </li>
+                ))
+              : not?.slice(1).map((item, index) => (
+                  <li
+                    className="px-6 py-2 border-b border-gray-200 w-full flex justify-between"
+                    key={index}
+                  >
+                    <span className="inline-block">
+                      {index + 1}-{item.coment}
+                    </span>
+                    <span className="inline-block">{item.yazar}</span>
+                  </li>
+                ))}
+          </ul>
         </div>
       )}
     </div>

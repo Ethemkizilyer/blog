@@ -4,7 +4,7 @@ import konu from "../assets/konu.jpeg";
 import { UpdateUser, useFetch } from "../auth/functions";
 import like from "../assets/like.png";
 import commentimg from "../assets/comment.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify } from "../helper/Toastfy";
 
 const Card = ({ item }) => {
@@ -12,7 +12,7 @@ const Card = ({ item }) => {
   const [likethink, setLikeThink] = useState();
 
   const { isLoading, cardList } = useFetch();
-  const [comments, setComments] = useState("");
+  const [comments, setComments] = useState({yazar:"",coment:""});
   const { user } = useSelector((state) => state.auth);
   // console.log(user);
 
@@ -36,16 +36,18 @@ const Card = ({ item }) => {
       UpdateUser(mod);
     }
   };
+  useEffect(()=>{const yazan=user?.username || "Anonim" 
+setComments({ ...comments, yazar: yazan })},[user])
+
   const addComment = (id) => {
     const commentArray = cardList?.find((produc) => produc.id == id);
-    // console.log(cardList.filter((item)=>item.id == comment));
     console.log(commentArray);
-    // console.log(id);
+    
+    console.log(user);
+   
     commentArray?.comment.push(comments);
     UpdateUser(commentArray);
-    // console.log(commentArray)
-    // const ksd = cardList.map((item)=>item.comment)
-    // console.log(ksd.shift());
+
   };
   return (
     <>
@@ -84,7 +86,7 @@ const Card = ({ item }) => {
               </svg>
               {item.email}
             </p>
-            <div className="flex justify-start gap-2 items-center mt-2 ml-4">
+            <div className="flex justify-between gap-2 items-center mt-2 ml-4">
               <div className="flex justify-center items-center gap-2 mb-2">
                 <img
                   src={like}
@@ -136,9 +138,9 @@ const Card = ({ item }) => {
             </div>
             <textarea
               className="modal-body relative p-4 outline-none"
-              value={comments.yourComment}
+              value={comments.coment}
               placeholder="write your comment"
-              onChange={(e) => setComments(e.target.value)}
+              onChange={(e) => setComments({...comments,coment:e.target.value})}
             ></textarea>
             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
               <button
