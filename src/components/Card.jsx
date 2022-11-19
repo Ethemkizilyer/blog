@@ -36,7 +36,8 @@ const Card = ({ item }) => {
       UpdateUser(mod);
     }
   };
-  useEffect(()=>{const yazan=user?.username || "Anonim" 
+
+  useEffect(()=>{const yazan = user?.username || "Anonim"; 
 setComments({ ...comments, yazar: yazan })},[user])
 
   const addComment = (id) => {

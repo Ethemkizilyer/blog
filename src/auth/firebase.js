@@ -115,7 +115,7 @@ export const signUpProvider = (navigate, dispatch) => {
     .then(({ user }) => {
       dispatch(
         setUser({
-          displayName: user.displayName,
+          username: user.displayName,
           email: user.email,
         })
       );
