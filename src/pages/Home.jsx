@@ -9,7 +9,6 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="flex justify-center gap-2 mb-12 items-center">
         <span className="w-[200px] h-2 bg-black"></span>
         <p className="text-2xl uppercase">Dashboard</p>

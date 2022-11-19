@@ -53,8 +53,8 @@ const New = () => {
     <div>
       
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col justify-center items-center mt-20 gap-4">
-          <img src={blog} alt="" />
+        <div className="flex flex-col h-[91vh] justify-center -mt-6 items-center gap-4" style={{backgroundImage:`url(${blog})`}}>
+          {/* <img src={blog} alt="" /> */}
           <input
             type="text"
             placeholder="Title *"
@@ -87,10 +87,11 @@ const New = () => {
               {`3000/ ${count?.length}`}
             </p>
           </div>
-        </div>
-        <button className="py-2 px-4 bg-teal-600 block  mx-auto mt-2 rounded-lg  text-white font-bold hover:bg-teal-400 hover:text-black duration-200">
+          <button className="py-2 px-4 bg-teal-600 block  mx-auto mt-2 rounded-lg  text-white font-bold hover:bg-teal-400 hover:text-black duration-200">
           Submit
         </button>
+        </div>
+        
       </form>
     </div>
   );

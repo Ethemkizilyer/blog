@@ -7,6 +7,7 @@ import {
   signUpProvider,
   signUpProviderFaceBook,
 } from "../auth/firebase";
+import face from "../assets/face.png"
 // import { setUser } from "../features/authSlice";
 
 const Login = () => {
@@ -36,13 +37,13 @@ const Login = () => {
   };
 
   return (
-    <section className="h-screen">
-      <div className="px-6 h-full text-gray-800">
+    <section className="h-[70vh]">
+      <div className="px-6  text-gray-800">
         <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
             <img
               src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-              className="w-full"
+              className="w-[35vw] mx-auto"
               alt="Login"
             />
           </div>
@@ -57,7 +58,7 @@ const Login = () => {
                 onClick={handleGoogle}
               >
                 {/* Google */}
-                <svg width="32" height="32" viewBox="0 0 24 24">
+                <svg width="20" height="20" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
                     d="M12 11v2h2v2H9V9h7c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h5c1.1 0 2-.9 2-2v-4h-4z"
@@ -72,12 +73,7 @@ const Login = () => {
                 onClick={handleFacebook}
               >
                 {/* Facebook */}
-                <svg width="32" height="32" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M12 11v2h2v2H9V9h7c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h5c1.1 0 2-.9 2-2v-4h-4z"
-                  />
-                </svg>
+                <img src={face} className="w-[20px]" alt="" />
               </button>
             </div>
             <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
@@ -122,24 +118,7 @@ const Login = () => {
                 }
               />
             </div>
-            <div className="flex justify-between items-center mb-6">
-              <div className="form-group form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                  id="exampleCheck2"
-                />
-                <label
-                  className="form-check-label inline-block text-gray-800"
-                  htmlFor="exampleCheck2"
-                >
-                  Remember me
-                </label>
-              </div>
-              <a href="#!" className="text-gray-800">
-                Forgot password?
-              </a>
-            </div>
+
             <div className="text-center lg:text-left">
               <button
                 type="button"
