@@ -57,17 +57,4 @@ export const DeleteUser = (id) => {
   remove(ref(db, "user/" + id));
 };
 
-export const UpdateCard = (mod) => {
-  const db = getDatabase(firebase);
-  const userRef = ref(db, "user/");
-  const updates = {};
-  updates["user/" + mod.id] = mod;
-  return update(ref(db), updates);
-};
-export const UpdateComment = (mod) => {
-  const db = getDatabase(firebase);
-  const userRef = ref(db, "user/");
-  const updates = {};
-  updates["user/" + mod.id] = mod;
-  return update(ref(db), updates);
-};
+

@@ -8,7 +8,7 @@ import commentimg from "../assets/comment.png";
 
 import blog from "../assets/konu.jpeg";
 
-import { DeleteUser, UpdateCard, UpdateComment, UpdateUser, useFetch } from "../auth/functions";
+import { DeleteUser, UpdateUser, useFetch } from "../auth/functions";
 import { toastSuccessNotify, toastWarnNotify } from "../helper/Toastfy";
 
 const Details = () => {
@@ -19,64 +19,59 @@ const Details = () => {
   };
   const [editCard, setEditCard] = useState(initialValues);
 
-
   const { state } = useLocation();
 
-   const navigate = useNavigate();
-   const [likethink, setLikeThink] = useState();
+  const navigate = useNavigate();
+  const [likethink, setLikeThink] = useState();
 
-   const { isLoading, cardList } = useFetch();
-   const [comments, setComments] = useState("");
-   const { user } = useSelector((state) => state.auth);
+  const { isLoading, cardList } = useFetch();
+  const [comments, setComments] = useState("");
+  const { user } = useSelector((state) => state.auth);
   const deleteCard = (id) => {
     DeleteUser(id);
     navigate("/");
     toastWarnNotify("Delete successfully");
   };
-  const upDateCard = (id) => {
+  const UpdateUser = (id) => {
     const mod = cardList.find((produc) => produc.id == id);
     mod.ImgUrl = editCard.imgUrl;
     mod.Title = editCard.title;
     mod.content = editCard.content;
-    UpdateCard(mod);
+    UpdateUser(mod);
     navigate("/");
     toastSuccessNotify("Edit succesfully");
   };
   // console.log(state)
-   
-    // console.log(user);
 
-    useEffect(() => {
-      setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
-    }, []);
-     const modalLike = (id) => {
-       setLikeThink(localStorage.setItem("like", JSON.stringify(!likethink)));
-       console.log(id);
+  // console.log(user);
 
-       console.log(likethink);
-       setLikeThink(!likethink);
-       if (!likethink) {
-         const mod = cardList?.find((product) => product.id === id);
+  useEffect(() => {
+    setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
+  }, []);
+  const modalLike = (id) => {
+    setLikeThink(localStorage.setItem("like", JSON.stringify(!likethink)));
+    console.log(id);
 
-         mod.like += 1;
-         UpdateUser(mod);
-       } else {
-         const mod = cardList?.find((product) => product.id === id);
-         mod.like -= 1;
-         UpdateUser(mod);
-       }
-     };
-       const addComment = (id) => {
-         const commentArray = cardList?.find((produc) => produc.id == id);
-         // console.log(cardList.filter((item)=>item.id == comment));
-         console.log(commentArray);
-         // console.log(id);
-         commentArray?.comment.push(comments);
-         UpdateComment(commentArray);
-         // console.log(commentArray)
-         // const ksd = cardList.map((item)=>item.comment)
-         // console.log(ksd.shift());
-       };
+    console.log(likethink);
+    setLikeThink(!likethink);
+    if (!likethink) {
+      const mod = cardList?.find((product) => product.id === id);
+
+      mod.like += 1;
+      UpdateUser(mod);
+    } else {
+      const mod = cardList?.find((product) => product.id === id);
+      mod.like -= 1;
+      UpdateUser(mod);
+    }
+  };
+  const addComment = (id) => {
+    const commentArray = cardList?.find((produc) => produc.id == id);
+    console.log(commentArray);
+    // console.log(id);
+    commentArray?.comment.push(comments);
+    UpdateUser(commentArray);
+  };
   return (
     <div className="flex item-center justify-around">
       <div className="flex items-center  flex-col">
@@ -315,7 +310,7 @@ const Details = () => {
         duration-150
         ease-in-out
         ml-1"
-                        onClick={() => upDateCard(state.id)}
+                        onClick={() => UpdateUser(state.id)}
                         data-bs-dismiss="modal"
                       >
                         Save Edit
@@ -336,17 +331,18 @@ const Details = () => {
           ""
         )}
       </div>
-      {state.comment.length >1 && <div>
-        <h4>MESSAGE</h4>
-        {state.comment.slice(1).map((item, index) => (
-          <ul>
-            <li key={index}>
-              {index + 1}-{item}
-            </li>
-          </ul>
-        ))}
-      </div>}
-      
+      {state.comment.length > 1 && (
+        <div>
+          <h4>MESSAGE</h4>
+          {state.comment.slice(1).map((item, index) => (
+            <ul>
+              <li key={index}>
+                {index + 1}-{item}
+              </li>
+            </ul>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

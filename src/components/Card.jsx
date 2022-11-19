@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import konu from "../assets/konu.jpeg";
-import { UpdateComment, UpdateUser, useFetch } from "../auth/functions";
+import { UpdateUser, useFetch } from "../auth/functions";
 import like from "../assets/like.png";
 import commentimg from "../assets/comment.png";
 import { useSelector } from "react-redux";
@@ -13,38 +13,36 @@ const Card = ({ item }) => {
 
   const { isLoading, cardList } = useFetch();
   const [comments, setComments] = useState("");
-const { user } = useSelector((state) => state.auth);
-// console.log(user);
+  const { user } = useSelector((state) => state.auth);
+  // console.log(user);
 
-useEffect(()=>{
-setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
-},[])
-   const modalLike = (id) => { 
-    
-setLikeThink(localStorage.setItem("like", JSON.stringify(!likethink)));
-     console.log(id);
+  useEffect(() => {
+    setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
+  }, []);
+  const modalLike = (id) => {
+    setLikeThink(localStorage.setItem("like", JSON.stringify(!likethink)));
+    console.log(id);
 
-     console.log(likethink)
+    console.log(likethink);
     setLikeThink(!likethink);
-     if (!likethink) {
-       const mod = cardList?.find((product) => product.id === id);
-      
-       mod.like += 1;
-       UpdateUser(mod);
-     } else {
-       const mod = cardList?.find((product) => product.id === id);
-       mod.like -= 1;
-       UpdateUser(mod);
-     }
-      
-   };
+    if (!likethink) {
+      const mod = cardList?.find((product) => product.id === id);
+
+      mod.like += 1;
+      UpdateUser(mod);
+    } else {
+      const mod = cardList?.find((product) => product.id === id);
+      mod.like -= 1;
+      UpdateUser(mod);
+    }
+  };
   const addComment = (id) => {
     const commentArray = cardList?.find((produc) => produc.id == id);
     // console.log(cardList.filter((item)=>item.id == comment));
     console.log(commentArray);
     // console.log(id);
     commentArray?.comment.push(comments);
-    UpdateComment(commentArray);
+    UpdateUser(commentArray);
     // console.log(commentArray)
     // const ksd = cardList.map((item)=>item.comment)
     // console.log(ksd.shift());
