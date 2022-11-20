@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useFetch } from "../auth/functions";
 import Card from "../components/Card";
@@ -6,6 +6,9 @@ import loading from "../assets/loading.gif";
 
 const Home = () => {
   const { isLoading, cardList } = useFetch();
+  useEffect(()=> {
+localStorage.setItem("like", JSON.stringify(false));
+  },[])
 
   return (
     <div>
