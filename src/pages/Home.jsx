@@ -9,16 +9,11 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flex justify-center gap-2 mb-12 items-center">
-        <span className="w-[200px] h-2 bg-black"></span>
-        <p className="text-2xl uppercase">Dashboard</p>
-        <span className="w-[200px] h-2 bg-black "></span>
-      </div>
       {!isLoading ? (
         <div className="flex flex-wrap gap-6 justify-center items-center ">
           {!cardList?.length && (
             <p className="text-2xl uppercase mx-auto text-center">
-              Blog does not exist Go to newBlog page to add
+              Empty
             </p>
           )}
           {cardList?.map((item, index) => (
