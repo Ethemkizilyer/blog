@@ -105,7 +105,7 @@ console.log(not);
           <div className="w-[90%] h-36 mx-auto">
             {state?.ImgUrl ? (
               <img
-                className="rounded-t-lg w-[21rem] mx-auto"
+                className="rounded-t-lg w-[21rem] h-48 mx-auto"
                 src={state?.ImgUrl}
                 alt=""
               />
