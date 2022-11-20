@@ -55,12 +55,13 @@ export const createUser = async (
         //   password: password,
       })
     );
-
+toastSuccessNotify(`Hoşheldiniz Sn.${displayName}`)
     // SweetAlertsRegister();
     navigate("/");
     console.log(userCredential);
   } catch (error) {
     // SweetAlertsError(error);
+    toastErrorNotify(error.message)
     console.log(error);
   }
 };

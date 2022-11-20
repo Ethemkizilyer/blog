@@ -17,7 +17,7 @@ const Card = ({ item }) => {
   // console.log(user);
 
   useEffect(() => {
-    setLikeThink(JSON.parse(localStorage.getItem("like")) && false);
+    setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
   }, []);
   const modalLike = (id) => {
     setLikeThink(localStorage.setItem("like", JSON.stringify(!likethink)));

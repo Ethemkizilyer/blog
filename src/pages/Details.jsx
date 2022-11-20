@@ -206,13 +206,13 @@ console.log(not);
               <button
                 type="button"
                 className="w-[120px] bg-slate-300 py-2 px-4 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "
-                data-bs-toggle="modal1"
+                data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
               >
                 Edit
               </button>
               {/* ***********************Modal**************************** */}
-              <div
+              {/* <div
                 className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
                 id={`${state?.id}`}
                 aria-labelledby="staticBackdropLabel"
@@ -259,7 +259,7 @@ console.log(not);
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* ************************************************** */}
               <div
                 className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
@@ -280,7 +280,7 @@ console.log(not);
                       <button
                         type="button"
                         className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                        data-bs-dismiss="modal1"
+                        data-bs-dismiss="modal"
                         aria-label="Close"
                       />
                     </div>
@@ -347,7 +347,7 @@ console.log(not);
             transition
             duration-150
             ease-in-out"
-                        data-bs-dismiss="modal1"
+                        data-bs-dismiss="modal"
                       >
                         Close
                       </button>
@@ -371,7 +371,7 @@ console.log(not);
         ease-in-out
         ml-1"
                         onClick={() => UpdateUse(state.id)}
-                        data-bs-dismiss="modal1"
+                        data-bs-dismiss="modal"
                       >
                         Save Edit
                       </button>
