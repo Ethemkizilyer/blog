@@ -53,14 +53,14 @@ setComments({ ...comments, yazar: yazan })},[user])
   return (
     <>
       <div className="rounded-lg shadow-md  max-w-sm w-[350px] relative bg-gray-200 shadow-black mb-12">
-        <div className="w-[90%]">
+        <div className="w-[100%]">
           <div
-            className="w-full h-36 mx-auto"
+            className=" h-36 "
             onClick={() => navigate("/detail", { state: item })}
           >
             {item.ImgUrl ? (
               <img
-                className="rounded-t-lg w-40 h-36 mx-auto"
+                className="rounded-t-lg w-[21rem] h-36 mx-auto"
                 src={item.ImgUrl}
                 alt=""
               />
