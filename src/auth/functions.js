@@ -33,9 +33,9 @@ export const AddUser = (info, user, history, like, comment) => {
   const userRef = ref(db, "user/");
   const newUserRef = push(userRef);
   set(newUserRef, {
-    Title: info.title,
-    ImgUrl: info.imgUrl,
-    content: info.content,
+    Title: info?.title,
+    ImgUrl: info?.imgUrl,
+    content: info?.content,
     email: user?.email,
     history: history,
     like: like,
