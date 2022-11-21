@@ -16,7 +16,7 @@ localStorage.setItem("like", JSON.stringify(false));
         <div className="flex flex-wrap gap-6 justify-center items-center ">
           {!cardList?.length && (
             <p className="text-2xl uppercase mx-auto text-center">
-              Empty
+              Boş
             </p>
           )}
           {cardList?.map((item, index) => (

@@ -89,7 +89,7 @@ const New = () => {
             </p>
           </div>
           <button className="py-2 px-4 bg-teal-600 block  mx-auto mt-2 rounded-lg  text-white font-bold hover:bg-teal-400 hover:text-black duration-200">
-          Submit
+          Gönder
         </button>
         </div>
         
