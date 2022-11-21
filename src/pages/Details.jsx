@@ -107,7 +107,7 @@ UpdateUser(yorumlar)
 
 
   return (
-    <div className="flex item-center justify-center gap-16">
+    <div className="flex item-center justify-center gap-16 flex-wrap">
       <div className="flex items-center  flex-col">
         <div className="rounded-lg shadow-md w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
           <div className="w-[90%] h-36 mx-auto">
