@@ -19,7 +19,7 @@ const Details = () => {
   }; 
    const { state } = useLocation();
   const { user } = useSelector((state) => state.auth);
-  const [editCard, setEditCard] = useState(state || initialValues);
+  const [editCard, setEditCard] = useState(initialValues);
 
 
 
@@ -160,7 +160,7 @@ UpdateUser(yorumlar)
                 className="w-10"
               />
               <p className="text-lg font-bold text-red-400">
-                {as < 0 ? 0 : as}
+                {as< 0 ? 0 : as}
               </p>
             </div>
 
@@ -253,7 +253,7 @@ UpdateUser(yorumlar)
                         type="text"
                         placeholder="Title *"
                         className="w-[400px] border-4 outline-none py-2 indent-2 shadow-md shadow-black rounded-md"
-                        value={editCard?.title || state?.Title}
+                        value={editCard?.title}
                         onChange={(e) =>
                           setEditCard({ ...editCard, title: e.target.value })
                         }
@@ -262,7 +262,7 @@ UpdateUser(yorumlar)
                         type="text"
                         placeholder="Image URL *"
                         className="w-[400px] border-4 outline-none py-2 indent-2 shadow-md shadow-black rounded-md"
-                        value={editCard?.imgUrl || state?.ImgUrl}
+                        value={editCard?.imgUrl}
                         onChange={(e) =>
                           setEditCard({ ...editCard, imgUrl: e.target.value })
                         }
