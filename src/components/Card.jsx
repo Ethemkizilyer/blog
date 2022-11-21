@@ -135,7 +135,7 @@ setComments({ ...comments, coment: "" });
                 className="text-xl font-medium leading-normal text-gray-800"
                 id="exampleModalLabel"
               >
-                Message
+                Mesaj
               </h5>
               <button
                 type="button"
@@ -147,7 +147,7 @@ setComments({ ...comments, coment: "" });
             <textarea
               className="modal-body relative p-4 outline-none"
               value={comments.coment}
-              placeholder="write your comment"
+              placeholder="Yorumunu yaz..."
               onChange={(e) =>
                 setComments({ ...comments, coment: e.target.value })
               }
