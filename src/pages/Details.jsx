@@ -16,23 +16,21 @@ const Details = () => {
     title: "",
     imgUrl: "",
     content: "",
-  };
+  }; 
+   const { state } = useLocation();
   const { user } = useSelector((state) => state.auth);
-  const [editCard, setEditCard] = useState(initialValues);
- 
-  const { state } = useLocation();
+  const [editCard, setEditCard] = useState(state || initialValues);
+
+
 
   const navigate = useNavigate();
   const [likethink, setLikeThink] = useState();
 
   const { isLoading, cardList } = useFetch();
- const [asd,setAsd]= useState(state?.comment.length)
- const [as,setAs]= useState(state?.like)
-//  const [not,setNot]= useState(state?.comment)
- const [not, setNot] = useState(state?.comment || JSON.parse(localStorage.getItem("not"))  );
- 
 
- const [comments, setComments] = useState({ yazar: "", coment: "" });
+  const [as, setAs] = useState(state?.like);
+
+  const [comments, setComments] = useState({ yazar: "", coment: "" });
   const deleteCard = (id) => {
     DeleteUser(id);
     navigate("/");
@@ -49,11 +47,11 @@ const Details = () => {
   };
   console.log(state)
 
-  // console.log(user);
+  console.log(user);
 
   useEffect(() => {
-      // setNot(JSON.parse(localStorage.getItem("not")))
-     
+    // setNot(JSON.parse(localStorage.getItem("not")))
+
     setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
   }, []);
   const modalLike = (id) => {
@@ -64,7 +62,7 @@ const Details = () => {
     setLikeThink(!likethink);
     if (!likethink) {
       const mod = cardList?.find((product) => product.id === id);
-setAs(as+1)
+      setAs(as + 1);
       mod.like += 1;
       UpdateUser(mod);
     } else {
@@ -74,32 +72,42 @@ setAs(as+1)
       UpdateUser(mod);
     }
   };
-     
-useEffect(() => {
-  const yazan = user?.username || "Anonim";
-  setComments({ ...comments, yazar: yazan });
-}, [user,state]);
 
+  useEffect(() => {
+    const yazan = user?.username || "Anonim";
+    setComments({ ...comments, yazar: yazan });
+  }, [user, state]);
 
-// ****************
+  // ****************
   const addComment = (id) => {
-    
- const commentArray = cardList?.find((produc) => produc.id == id);
- console.log(commentArray);
- setNot([...not,comments])
-setAsd(asd+1)
- console.log(user);
+    const commentArray = cardList?.find((produc) => produc.id == id);
 
- commentArray?.comment.push(comments);
- UpdateUser(commentArray);
-localStorage.setItem("not", JSON.stringify(commentArray.comment));
-
+     commentArray?.comment.push({
+       ...comments,
+       zaman: new Date().toLocaleString("tr-TR", {
+         hour: "numeric",
+         minute: "numeric",
+         hour12: true,
+       }),
+     });
+    UpdateUser(commentArray);
+    setComments({ ...comments, coment: "" });
   };
+  let yorumlar = cardList?.find((produc) => produc.id == state.id);
+  console.log(yorumlar);
 
-  // *****************************
-console.log(not);
+const siler=(index)=>{
+let aer= yorumlar?.comment.splice(index+1,1)
+console.log(aer)
+console.log(yorumlar?.comment.slice(1));
+UpdateUser(yorumlar)
+}
+
+// console.log(Boolean(item?.yazar == "Anonim"));
+
+
   return (
-    <div className="flex item-center justify-around">
+    <div className="flex item-center justify-center gap-16">
       <div className="flex items-center  flex-col">
         <div className="rounded-lg shadow-md w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
           <div className="w-[90%] h-36 mx-auto">
@@ -151,7 +159,9 @@ console.log(not);
                 onClick={() => modalLike(state?.id)}
                 className="w-10"
               />
-              <p className="text-lg font-bold text-red-400">{as}</p>
+              <p className="text-lg font-bold text-red-400">
+                {as < 0 ? 0 : as}
+              </p>
             </div>
 
             <div className="flex justify-center items-center gap-2 mb-2">
@@ -163,13 +173,13 @@ console.log(not);
                 // data-bs-target={`#${state?.id}`}
               ></img>
               <p className="text-lg font-bold text-red-400">
-                {not ? not.length - 1 : asd - 1}
+                {yorumlar?.comment?.length - 1}
               </p>
             </div>
           </div>
-          <div>
+          <div className="w-[100%] flex nowrap">
             <input
-              className="w-[85%]
+              className="w-full
         px-3
         py-1.5
         text-base
@@ -190,7 +200,7 @@ console.log(not);
               type="text"
             />
             <button
-              type="button"
+              type="submit"
               class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
               onClick={() => addComment(state?.id)}
             >
@@ -209,58 +219,9 @@ console.log(not);
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
               >
-                Edit
+                Güncelle
               </button>
-              {/* ***********************Modal**************************** */}
-              {/* <div
-                className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                id={`${state?.id}`}
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog relative w-auto pointer-events-none">
-                  <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-                    <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                      <h5
-                        className="text-xl font-medium leading-normal text-gray-800"
-                        id="exampleModalLabel"
-                      >
-                        Message
-                      </h5>
-                      <button
-                        type="button"
-                        className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      />
-                    </div>
-                    <textarea
-                      className="modal-body relative p-4 outline-none"
-                      value={comments?.coment}
-                      placeholder="write your comment"
-                      onChange={(e) =>
-                        setComments({ ...comments, coment: e.target.value })
-                      }
-                    ></textarea>
-                    <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                      <button
-                        type="button"
-                        className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
-                        onClick={() => addComment(state?.id)}
-                        data-bs-dismiss="modal"
-                      >
-                        Add Comment
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              {/* ************************************************** */}
+
               <div
                 className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
                 id="exampleModal"
@@ -275,7 +236,7 @@ console.log(not);
                         className="text-xl leading-normal text-gray-800 font-bold"
                         id="exampleModalLabel"
                       >
-                        Edit Blog
+                        Güncel Blog
                       </h5>
                       <button
                         type="button"
@@ -284,23 +245,24 @@ console.log(not);
                         aria-label="Close"
                       />
                     </div>
-                    <div className="flex flex-col justify-center items-center mt-20 gap-4">
-                      <img src={blog} alt="" />
+                    <div
+                      className="flex flex-col justify-center items-center  gap-4"
+                      style={{ backgroundImage: `url(${blog})` }}
+                    >
                       <input
                         type="text"
                         placeholder="Title *"
                         className="w-[400px] border-4 outline-none py-2 indent-2 shadow-md shadow-black rounded-md"
-                        value={editCard.title}
+                        value={editCard?.title || state?.Title}
                         onChange={(e) =>
                           setEditCard({ ...editCard, title: e.target.value })
                         }
                       />
                       <input
                         type="text"
-                        placeholder="Image URL *
-  "
+                        placeholder="Image URL *"
                         className="w-[400px] border-4 outline-none py-2 indent-2 shadow-md shadow-black rounded-md"
-                        value={editCard.imgUrl}
+                        value={editCard?.imgUrl || state?.ImgUrl}
                         onChange={(e) =>
                           setEditCard({ ...editCard, imgUrl: e.target.value })
                         }
@@ -313,7 +275,7 @@ console.log(not);
                           rows="10"
                           className=" w-[400px] h-[300px] border-4 outline-none py-2 indent-2 shadow-md shadow-black rounded-md"
                           placeholder="Content *"
-                          value={editCard.content}
+                          value={editCard?.content}
                           onChange={(e) =>
                             setEditCard({
                               ...editCard,
@@ -381,45 +343,57 @@ console.log(not);
               </div>
             </div>
             <button
-              className="w-[120px] bg-slate-300 py-2 px-6 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "
+              className="w-[120px] bg-red-300 py-2 px-6 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "
               onClick={() => deleteCard(state.id)}
             >
-              Delete
+              Sil
             </button>
           </div>
         ) : (
           ""
         )}
       </div>
-      {state.comment.length > 1 && (
-        <div>
+      {yorumlar?.comment.length > 1 && (
+        <div className="w-[35%]">
           <h4 className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg bg-blue-600 text-white text-center">
-            MESSAGE
+            MESAJLAR
           </h4>
-          <ul className="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
-            {!not
-              ? state?.comment.slice(1).map((item, index) => (
-                  <li
-                    className="px-6 py-2 border-b border-gray-200 w-full flex justify-between"
-                    key={index}
-                  >
-                    <span className="inline-block">
-                      {index + 1}-{item.coment}
+          <ul className="bg-white rounded-lg border border-gray-200 text-gray-900">
+            {yorumlar?.comment?.slice(1).map((item, index) => (
+              <li
+                className="px-3 py-2 border-b border-gray-200 w-full flex justify-between items-center"
+                key={index}
+              >
+                <span className="w-[70%] border break-words ">
+                  ⌨{item?.coment}
+                </span>
+                <div className="flex gap-3 w-[30%] items-end justify-end">
+                  <p className="flex flex-col items-center">
+                    <span className=" text-xs break-words text-center">
+                      {item?.yazar}
                     </span>
-                    <span className="inline-block">{item.yazar}</span>
-                  </li>
-                ))
-              : not?.slice(1).map((item, index) => (
-                  <li
-                    className="px-6 py-2 border-b border-gray-200 w-full flex justify-between"
-                    key={index}
-                  >
-                    <span className="inline-block">
-                      {index + 1}-{item.coment}
-                    </span>
-                    <span className="inline-block">{item.yazar}</span>
-                  </li>
-                ))}
+                    <span className=" text-xs  pt-1 ">{item?.zaman}</span>
+                  </p>
+                  {user?.username == item?.yazar ? (
+                    <button
+                      class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                      onClick={() => siler(index)}
+                    >
+                      SİL
+                    </button>
+                  ): ""}
+
+                  {(comments?.yazar == "Anonim" & comments?.yazar == item?.yazar) ? (
+                    <button
+                      class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                      onClick={() => siler(index)}
+                    >
+                      SİL
+                    </button>
+                  ): ""}
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       )}

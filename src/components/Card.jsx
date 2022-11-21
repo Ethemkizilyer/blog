@@ -12,7 +12,7 @@ const Card = ({ item }) => {
   const [likethink, setLikeThink] = useState();
 
   const { isLoading, cardList } = useFetch();
-  const [comments, setComments] = useState({yazar:"",coment:""});
+  const [comments, setComments] = useState({yazar:"",coment:"",zaman:""});
   const { user } = useSelector((state) => state.auth);
   // console.log(user);
 
@@ -46,9 +46,16 @@ setComments({ ...comments, yazar: yazan })},[user])
     
     console.log(user);
    
-    commentArray?.comment.push(comments);
+      commentArray?.comment.push({
+        ...comments,
+        zaman: new Date().toLocaleString("tr-TR", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        }),
+      });
     UpdateUser(commentArray);
-
+setComments({ ...comments, coment: "" });
   };
   return (
     <>
@@ -62,7 +69,7 @@ setComments({ ...comments, yazar: yazan })},[user])
               <img
                 className="rounded-t-lg w-[21rem] h-36 mx-auto"
                 src={item.ImgUrl}
-                alt=""
+                alt={item.ImgUrl}
               />
             ) : (
               <img className="rounded-t-lg w-48 mx-auto" src={konu} alt="" />
@@ -141,12 +148,16 @@ setComments({ ...comments, yazar: yazan })},[user])
               className="modal-body relative p-4 outline-none"
               value={comments.coment}
               placeholder="write your comment"
-              onChange={(e) => setComments({...comments,coment:e.target.value})}
+              onChange={(e) =>
+                setComments({ ...comments, coment: e.target.value })
+              }
             ></textarea>
             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
               <button
                 type="button"
                 className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                data-bs-dismiss="modal"
+                aria-label="Close"
               >
                 Close
               </button>
