@@ -108,8 +108,8 @@ UpdateUser(yorumlar)
 
   return (
     <div className="flex item-center justify-center gap-16 flex-wrap">
-      <div className="flex items-center  flex-col">
-        <div className="rounded-lg shadow-md w-[550px] h-[550px] relative bg-gray-200 shadow-black mb-12">
+      <div className="flex items-center flex-col ">
+        <div className="rounded-lg shadow-md w-[400px] h-[500px] relative bg-gray-200 shadow-black mb-12">
           <div className="w-[90%] h-36 mx-auto">
             {state?.ImgUrl ? (
               <img
@@ -133,7 +133,7 @@ UpdateUser(yorumlar)
                 width: "95%",
                 wordWrap: "break-word",
               }}
-              className="text-md font-bold overflow-auto h-32"
+              className="text-md font-bold overflow-auto h-24"
             >
               {state?.content}
             </p>
@@ -284,9 +284,7 @@ UpdateUser(yorumlar)
                           }
                           wrap="hard"
                         ></textarea>
-
                         <p className="absolute bottom-4 right-4">
-                          {/* {`3000/ ${count?.length}`} */}
                         </p>
                       </div>
                     </div>
@@ -354,7 +352,7 @@ UpdateUser(yorumlar)
         )}
       </div>
       {yorumlar?.comment.length > 1 && (
-        <div className="w-[35%]">
+        <div className="w-[30rem] mb-[3rem]">
           <h4 className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg bg-blue-600 text-white text-center">
             MESAJLAR
           </h4>
