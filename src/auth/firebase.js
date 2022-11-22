@@ -80,7 +80,7 @@ export const userObserver = (dispatch) => {
       );
     } else {
       dispatch(clearUser());
-      console.log("user signed out");
+      // console.log("user signed out");
     }
   });
 };

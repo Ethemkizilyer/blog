@@ -113,7 +113,7 @@ setComments({ ...comments, coment: "" });
                   data-bs-target={`#${item.id}`}
                 ></img>
                 <p className="text-lg font-bold text-red-400">
-                  {item.comment.length - 1}
+                  {item?.comment?.length - 1}
                 </p>
               </div>
             </div>

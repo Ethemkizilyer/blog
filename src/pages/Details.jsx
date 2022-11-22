@@ -21,7 +21,7 @@ const Details = () => {
   const { user } = useSelector((state) => state.auth);
   const [editCard, setEditCard] = useState(initialValues);
 
-
+const [condi,setCondi]=useState(false)
 
   const navigate = useNavigate();
   const [likethink, setLikeThink] = useState();
@@ -45,9 +45,9 @@ const Details = () => {
     navigate("/");
     toastSuccessNotify("Edit succesfully");
   };
-  console.log(state)
+  // console.log(state)
 
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     // setNot(JSON.parse(localStorage.getItem("not")))
@@ -94,7 +94,7 @@ const Details = () => {
     setComments({ ...comments, coment: "" });
   };
   let yorumlar = cardList?.find((produc) => produc.id == state.id);
-  console.log(yorumlar);
+  // console.log(yorumlar);
 
 const siler=(index)=>{
 let aer= yorumlar?.comment.splice(index+1,1)
@@ -102,8 +102,26 @@ console.log(aer)
 console.log(yorumlar?.comment.slice(1));
 UpdateUser(yorumlar)
 }
+const degis=(e,index)=>{
 
-// console.log(Boolean(item?.yazar == "Anonim"));
+
+ setCondi(!condi)
+condi ? (e.target.innerText = "Değiştir") : (e.target.innerText = "KAYDET");
+  console.log(condi)
+
+if(condi==true){
+ 
+  (yorumlar?.comment[index + 1]).coment =
+    e.target.parentElement.parentElement.firstChild.innerText;
+    UpdateUser(yorumlar);
+}
+console.log(index);
+
+
+// console.log(e.target.parentElement.parentElement.firstChild.innerText)
+
+}
+
 
 
   return (
@@ -160,7 +178,7 @@ UpdateUser(yorumlar)
                 className="w-10"
               />
               <p className="text-lg font-bold text-red-400">
-                {as< 0 ? 0 : as}
+                {as < 0 ? 0 : as}
               </p>
             </div>
 
@@ -201,7 +219,7 @@ UpdateUser(yorumlar)
             />
             <button
               type="submit"
-              class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
               onClick={() => addComment(state?.id)}
             >
               Ekle
@@ -284,8 +302,7 @@ UpdateUser(yorumlar)
                           }
                           wrap="hard"
                         ></textarea>
-                        <p className="absolute bottom-4 right-4">
-                        </p>
+                        <p className="absolute bottom-4 right-4"></p>
                       </div>
                     </div>
                     <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
@@ -352,7 +369,7 @@ UpdateUser(yorumlar)
         )}
       </div>
       {yorumlar?.comment.length > 1 && (
-        <div className="w-[30rem] mb-[3rem]">
+        <div className="w-[35rem] mb-[3rem]">
           <h4 className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg bg-blue-600 text-white text-center">
             MESAJLAR
           </h4>
@@ -362,8 +379,11 @@ UpdateUser(yorumlar)
                 className="px-3 py-2 border-b border-gray-200 w-full flex justify-between items-center"
                 key={index}
               >
-                <span className="w-[70%] border break-words ">
-                  ⌨{item?.coment}
+                <span
+                  className="w-[70%] border break-words "
+                  contentEditable={condi}
+                >
+                  {item?.coment}
                 </span>
                 <div className="flex gap-3 w-[30%] items-end justify-end">
                   <p className="flex flex-col items-center">
@@ -374,21 +394,47 @@ UpdateUser(yorumlar)
                   </p>
                   {user?.username == item?.yazar ? (
                     <button
-                      class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="inline-block px-1 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
                       onClick={() => siler(index)}
                     >
                       SİL
                     </button>
-                  ): ""}
+                  ) : (
+                    ""
+                  )}
 
-                  {(comments?.yazar == "Anonim" & comments?.yazar == item?.yazar) ? (
+                  {(comments?.yazar == "Anonim") &
+                  (comments?.yazar == item?.yazar) ? (
                     <button
-                      class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="inline-block px-1 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
                       onClick={() => siler(index)}
                     >
                       SİL
                     </button>
-                  ): ""}
+                  ) : (
+                    ""
+                  )}
+                  {user?.username == item?.yazar ? (
+                    <button
+                      className="inline-block px-1 py-2.5 bg-orange-300 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                      onClick={(e) => degis(e, index)}
+                    >
+                      Değiştir
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {(comments?.yazar == "Anonim") &
+                  (comments?.yazar == item?.yazar) ? (
+                    <button
+                      className="inline-block px-1 py-2.5 bg-orange-300 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                      onClick={(e) => degis(e, index)}
+                    >
+                      Değiştir
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </li>
             ))}
