@@ -64,7 +64,7 @@ const New = () => {
             onChange={(e) => setInfo({ ...info, title: e.target.value })}
           />
           <input
-            type="text"
+            type="url"
             placeholder="Image URL *
 "
             className="w-[400px] border-4 outline-none py-2 indent-2 shadow-md shadow-black rounded-md"
