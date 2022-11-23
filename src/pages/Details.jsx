@@ -21,7 +21,7 @@ const Details = () => {
   const { user } = useSelector((state) => state.auth);
   const [editCard, setEditCard] = useState(initialValues);
 
-const [condi,setCondi]=useState(false)
+const [condi,setCondi]=useState(true)
 
   const navigate = useNavigate();
   const [likethink, setLikeThink] = useState();
@@ -103,13 +103,17 @@ console.log(yorumlar?.comment.slice(1));
 UpdateUser(yorumlar)
 }
 const degis=(e,index)=>{
+setCondi(!condi)
 
+condi
+  ? (e.target.parentElement.parentElement.firstChild.contentEditable = true)
+  : (e.target.parentElement.parentElement.firstChild.contentEditable = false); 
 
- setCondi(!condi)
-condi ? (e.target.innerText = "Değiştir") : (e.target.innerText = "KAYDET");
+ 
+condi ? (e.target.innerText = "KAYDET") : (e.target.innerText = "Değiştir");
   console.log(condi)
 
-if(condi==true){
+if(condi==false){
  
   (yorumlar?.comment[index + 1]).coment =
     e.target.parentElement.parentElement.firstChild.innerText;
@@ -381,7 +385,7 @@ console.log(index);
               >
                 <span
                   className="w-[70%] border break-words "
-                  contentEditable={condi}
+                  
                 >
                   {item?.coment}
                 </span>
