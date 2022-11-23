@@ -182,7 +182,7 @@ console.log(index);
                 className="w-10"
               />
               <p className="text-lg font-bold text-red-400">
-                {as < 0 ? 0 : as}
+                {as< 0 ? 0 : as}
               </p>
             </div>
 
@@ -195,7 +195,7 @@ console.log(index);
                 // data-bs-target={`#${state?.id}`}
               ></img>
               <p className="text-lg font-bold text-red-400">
-                {yorumlar?.comment?.length - 1}
+                {(yorumlar?.comment?.length == undefined) ? "Loading" : (yorumlar?.comment?.length - 1)}
               </p>
             </div>
           </div>
@@ -383,10 +383,7 @@ console.log(index);
                 className="px-3 py-2 border-b border-gray-200 w-full flex justify-between items-center"
                 key={index}
               >
-                <span
-                  className="w-[70%] border break-words "
-                  
-                >
+                <span className="w-[70%] border break-words ">
                   {item?.coment}
                 </span>
                 <div className="flex gap-3 w-[30%] items-end justify-end">
