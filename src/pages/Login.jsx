@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   signIn,
   signUpProvider,
-  signUpProviderFaceBook,
+  // signUpProviderFaceBook,
 } from "../auth/firebase";
-import face from "../assets/face.png"
+// import face from "../assets/face.png"
 // import { setUser } from "../features/authSlice";
 
 const Login = () => {
@@ -21,10 +21,9 @@ const Login = () => {
   const handleGoogle = () => {
     signUpProvider(navigate, dispatch);
   };
-  const handleFacebook = () => {
-    signUpProviderFaceBook(navigate, dispatch);
-    console.log("sadık");
-  };
+  // const handleFacebook = () => {
+  //   signUpProviderFaceBook(navigate, dispatch);
+  // };
   const handleClick = (e) => {
     e.preventDefault();
     signIn(
@@ -38,7 +37,7 @@ const Login = () => {
 
   return (
     <section className="h-[70vh]">
-      <div className="px-6  text-gray-800">
+      <div className="px-6  text-gray-800 mt-[5rem] ">
         <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
             <img
@@ -65,22 +64,22 @@ const Login = () => {
                   />
                 </svg>
               </button>
-              <button
+              {/* <button
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
                 className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
                 onClick={handleFacebook}
               >
-                {/* Facebook */}
+                 Facebook 
                 <img src={face} className="w-[20px]" alt="" />
-              </button>
+              </button> */}
             </div>
             <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
               <p className="text-center font-semibold mx-4 mb-0">Or</p>
             </div>
             {/* Name input */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <input
                 type="text"
                 className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -91,7 +90,7 @@ const Login = () => {
                   setLoginUser({ ...loginUser, username: e.target.value })
                 }
               />
-            </div>
+            </div> */}
             {/* Email input */}
             <div className="mb-6">
               <input

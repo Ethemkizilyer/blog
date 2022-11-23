@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import konu from "../assets/konu.jpeg";
-
 import like from "../assets/like.png";
 import commentimg from "../assets/comment.png";
-
 import blog from "../assets/konu.jpeg";
-
 import { DeleteUser, UpdateUser, useFetch } from "../auth/functions";
 import { toastSuccessNotify, toastWarnNotify } from "../helper/Toastfy";
 
@@ -16,12 +13,12 @@ const Details = () => {
     title: "",
     imgUrl: "",
     content: "",
-  }; 
-   const { state } = useLocation();
+  };
+  const { state } = useLocation();
   const { user } = useSelector((state) => state.auth);
   const [editCard, setEditCard] = useState(initialValues);
 
-const [condi,setCondi]=useState(true)
+  const [condi, setCondi] = useState(true);
 
   const navigate = useNavigate();
   const [likethink, setLikeThink] = useState();
@@ -50,8 +47,6 @@ const [condi,setCondi]=useState(true)
   // console.log(user);
 
   useEffect(() => {
-    // setNot(JSON.parse(localStorage.getItem("not")))
-
     setLikeThink(JSON.parse(localStorage.getItem("like")) && true);
   }, []);
   const modalLike = (id) => {
@@ -82,51 +77,42 @@ const [condi,setCondi]=useState(true)
   const addComment = (id) => {
     const commentArray = cardList?.find((produc) => produc.id == id);
 
-     commentArray?.comment.push({
-       ...comments,
-       zaman: new Date().toLocaleString("tr-TR", {
-         hour: "numeric",
-         minute: "numeric",
-         hour12: true,
-       }),
-     });
+    commentArray?.comment.push({
+      ...comments,
+      zaman: new Date().toLocaleString("tr-TR", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }),
+    });
     UpdateUser(commentArray);
     setComments({ ...comments, coment: "" });
   };
   let yorumlar = cardList?.find((produc) => produc.id == state.id);
   // console.log(yorumlar);
 
-const siler=(index)=>{
-let aer= yorumlar?.comment.splice(index+1,1)
-console.log(aer)
-console.log(yorumlar?.comment.slice(1));
-UpdateUser(yorumlar)
-}
-const degis=(e,index)=>{
-setCondi(!condi)
-
-condi
-  ? (e.target.parentElement.parentElement.firstChild.contentEditable = true)
-  : (e.target.parentElement.parentElement.firstChild.contentEditable = false); 
-
- 
-condi ? (e.target.innerText = "KAYDET") : (e.target.innerText = "Değiştir");
-  console.log(condi)
-
-if(condi==false){
- 
-  (yorumlar?.comment[index + 1]).coment =
-    e.target.parentElement.parentElement.firstChild.innerText;
+  const siler = (index) => {
+    let aer = yorumlar?.comment.splice(index + 1, 1);
+    console.log(aer);
+    console.log(yorumlar?.comment.slice(1));
     UpdateUser(yorumlar);
-}
-console.log(index);
+  };
+  const degis = (e, index) => {
+    setCondi(!condi);
 
+    condi
+      ? (e.target.parentElement.parentElement.firstChild.contentEditable = true)
+      : (e.target.parentElement.parentElement.firstChild.contentEditable = false);
 
-// console.log(e.target.parentElement.parentElement.firstChild.innerText)
+    condi ? (e.target.innerText = "KAYDET") : (e.target.innerText = "Değiştir");
+    console.log(condi);
 
-}
-
-
+    if (condi == false) {
+      (yorumlar?.comment[index + 1]).coment =
+        e.target.parentElement.parentElement.firstChild.innerText;
+      UpdateUser(yorumlar);
+    }
+  };
 
   return (
     <div className="flex item-center justify-center gap-16 flex-wrap">
@@ -195,7 +181,9 @@ console.log(index);
                 // data-bs-target={`#${state?.id}`}
               ></img>
               <p className="text-lg font-bold text-red-400">
-                {(yorumlar?.comment?.length == undefined) ? "Loading" : (yorumlar?.comment?.length - 1)}
+                {yorumlar?.comment?.length == undefined
+                  ? "Loading"
+                  : yorumlar?.comment?.length - 1}
               </p>
             </div>
           </div>
@@ -232,9 +220,8 @@ console.log(index);
         </div>
         {user.email == state?.email ? (
           <div className="flex gap-4">
-            {/* <button className="w-[120px] bg-slate-300 py-2 px-4 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "onClick={()=>upDateCard(state)}>Edit</button> */}
             <div>
-              {/* Button trigger modal */}
+
               <button
                 type="button"
                 className="w-[120px] bg-slate-300 py-2 px-4 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "

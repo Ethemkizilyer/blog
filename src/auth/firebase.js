@@ -129,25 +129,25 @@ export const signUpProvider = (navigate, dispatch) => {
     });
 };
 
-export const signUpProviderFaceBook = (navigate, dispatch) => {
-  const provider = new FacebookAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      // const credential = FacebookAuthProvider.credentialFromResult(result);
-      // const accessToken = credential.accessToken
-      dispatch(
-        setUser({
-          displayName: user.displayName,
-          email: user.email,
-        })
-      );
-      navigate("/");
-      console.log("first");
-      toastSuccessNotify("Login successfully!!");
-    })
-    .catch((error) => {
-      toastErrorNotify(error);
+// export const signUpProviderFaceBook = (navigate, dispatch) => {
+//   const provider = new FacebookAuthProvider();
+//   signInWithPopup(auth, provider)
+//     .then((result) => {
+//       const user = result.user;
+//       // const credential = FacebookAuthProvider.credentialFromResult(result);
+//       // const accessToken = credential.accessToken
+//       dispatch(
+//         setUser({
+//           displayName: user.displayName,
+//           email: user.email,
+//         })
+//       );
+//       navigate("/");
+//       console.log("first");
+//       toastSuccessNotify("Login successfully!!");
+//     })
+//     .catch((error) => {
+//       toastErrorNotify(error);
 
-    });
-};
+//     });
+// };
