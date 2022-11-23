@@ -19,7 +19,7 @@ localStorage.setItem("like", JSON.stringify(false));
               Boş
             </p>
           )}
-          {cardList?.map((item, index) => (
+          {cardList?.reverse().map((item, index) => (
             <Card item={item} key={index} />
           ))}
         </div>
