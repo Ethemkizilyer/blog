@@ -89,7 +89,7 @@ const Details = () => {
     setComments({ ...comments, coment: "" });
   };
   let yorumlar = cardList?.find((produc) => produc.id == state.id);
-  // console.log(yorumlar);
+  console.log(yorumlar);
 
   const siler = (index) => {
     let aer = yorumlar?.comment.splice(index + 1, 1);
@@ -97,6 +97,7 @@ const Details = () => {
     console.log(yorumlar?.comment.slice(1));
     UpdateUser(yorumlar);
   };
+
   const degis = (e, index) => {
     setCondi(!condi);
 
@@ -110,6 +111,16 @@ const Details = () => {
     if (condi == false) {
       (yorumlar?.comment[index + 1]).coment =
         e.target.parentElement.parentElement.firstChild.innerText;
+
+      (yorumlar?.comment[index + 1]).zaman = new Date().toLocaleString(
+        "tr-TR",
+        {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        }
+      );
+
       UpdateUser(yorumlar);
     }
   };
@@ -168,7 +179,7 @@ const Details = () => {
                 className="w-10"
               />
               <p className="text-lg font-bold text-red-400">
-                {as< 0 ? 0 : as}
+                {as < 0 ? 0 : as}
               </p>
             </div>
 
@@ -221,7 +232,6 @@ const Details = () => {
         {user.email == state?.email ? (
           <div className="flex gap-4">
             <div>
-
               <button
                 type="button"
                 className="w-[120px] bg-slate-300 py-2 px-4 rounded-md text-lg font-bold text-slate-800 hover:text-white duration-300 "
