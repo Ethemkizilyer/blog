@@ -31,8 +31,8 @@ localStorage.setItem("like", JSON.stringify(false));
           ))}
         </div>
       ) : (
-        <div>
-          <img src={loading} alt="" className="mt-20 mx-auto" />
+        <div className="bg-white h-[100vh] -translate-y-8 w-full flex items-center justify-center">
+          <img src={loading} alt="" className=" mx-auto " />
         </div>
       )}
     </div>
