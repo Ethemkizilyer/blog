@@ -80,9 +80,13 @@ const Details = () => {
     commentArray?.comment.push({
       ...comments,
       zaman: new Date().toLocaleString("tr-TR", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
         hour: "numeric",
         minute: "numeric",
-        hour12: true,
+        second: "numeric",
+        timeZone: "Europe/Istanbul",
       }),
     });
     UpdateUser(commentArray);
@@ -129,10 +133,10 @@ const Details = () => {
     <div className="flex item-center justify-center gap-16 flex-wrap">
       <div className="flex items-center flex-col ">
         <div className="rounded-lg shadow-md w-[400px] h-[500px] relative bg-gray-200 shadow-black mb-12">
-          <div className="w-[90%] h-36 mx-auto">
+          <div className="w-[100%] h-36 ">
             {state?.ImgUrl ? (
               <img
-                className="rounded-t-lg w-[21rem] h-48 mx-auto"
+                className="rounded-t-lg w-full h-52 mx-auto"
                 src={state?.ImgUrl}
                 alt=""
               />
@@ -371,7 +375,7 @@ const Details = () => {
       </div>
       {yorumlar?.comment.length > 1 && (
         <div className="w-[35rem] mb-[3rem]">
-          <h4 className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg bg-blue-600 text-white text-center">
+          <h4 className="px-6 py-2 border-b border-gray-200 w-full rounded-lg bg-blue-600 text-white text-center">
             MESAJLAR
           </h4>
           <ul className="bg-white rounded-lg border border-gray-200 text-gray-900">
@@ -380,15 +384,15 @@ const Details = () => {
                 className="px-3 py-2 border-b border-gray-200 w-full flex justify-between items-center"
                 key={index}
               >
-                <span className="w-[70%] border break-words ">
+                <span className="w-[68%]  shadow-md break-words ">
                   {item?.coment}
                 </span>
-                <div className="flex gap-3 w-[30%] items-end justify-end">
-                  <p className="flex flex-col items-center">
+                <div className="flex relative gap-3 w-[30%] items-end justify-end ">
+                  <p className="flex flex-col justify-center items-center ">
                     <span className=" text-xs break-words text-center">
                       {item?.yazar}
                     </span>
-                    <span className=" text-xs  pt-1 ">{item?.zaman}</span>
+                    <span className=" text-[10px] pt-1 text-center">{item?.zaman}</span>
                   </p>
                   {user?.username == item?.yazar ? (
                     <button

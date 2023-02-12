@@ -5,11 +5,13 @@ import { logOut } from "../auth/firebase";
 import avatar from "../assets/avatar.png";
 
 const Navbar = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   return (
     <>
+   
       <nav className="w-full flex flex-wrap items-center justify-between py-3 bg-white dark:bg-gray-900 dark:text-white shadow-lg navbar navbar-expand-lg fixed-top">
         <div className="container-fluid w-full flex items-center justify-between px-6">
           <Link className="text-2xl  pr-2 font-semibold" to="/">

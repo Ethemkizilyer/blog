@@ -9,15 +9,18 @@ import New from "../pages/New";
 import Details from "../pages/Details";
 import Navbar from "../components/Navbar";
 
+
 const AppRouter = () => {
   let currentUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     userObserver(dispatch);
   }, [currentUser]);
+
   return (
     <>
-    <Navbar/>
+     
+      <Navbar /> 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
